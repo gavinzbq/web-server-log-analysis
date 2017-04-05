@@ -6,7 +6,7 @@
 
 
 # Abstract
-The work here is to perform basic analytics on the server log file, provide useful metrics, and implement basic security measures. 
+The work here is to perform basic analytics on the server log file, provide useful metrics, and implement basic security measures. This dataset is inspired by real NASA web traffic, which is very similar to server logs from e-commerce and other sites. Monitoring web traffic and providing these analytics is a real business need.
 
 The feature support are described below: 
 
@@ -25,7 +25,8 @@ Detect patterns of three failed login attempts from the same IP address over 20 
 ### New Feature:
 List the top 10 busiest (most frequently visited) 1-hour window whose start time is exactly at the beginning of an hour, i.e. '[DD/MON/YYYY:HH:00:00 -0400]'.
 
-This dataset is inspired by real NASA web traffic, which is very similar to server logs from e-commerce and other sites. Monitoring web traffic and providing these analytics is a real business need.
+### Dependency:
+Python 2.7
 
 
 ## Details of Implementation
