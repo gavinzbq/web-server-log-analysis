@@ -209,3 +209,5 @@ The top 10 busiest hours are as following.
     13/Jul/1995:13:00:00 -0400,17016
     13/Jul/1995:15:00:00 -0400,16925
     05/Jul/1995:16:00:00 -0400,16742
+    
+The new feature is practical when the log file records traffic through several days or more. Compared with feature 3, it has advantage that much less amount of data needs to be generated and processed.
