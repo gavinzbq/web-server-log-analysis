@@ -25,6 +25,9 @@ Detect patterns of three failed login attempts from the same IP address over 20 
 ### New Feature:
 List the top 10 busiest (most frequently visited) 1-hour window whose start time is exactly at the beginning of an hour, i.e. '[DD/MON/YYYY:HH:00:00 -0400]'.
 
+### Dependency:
+Python 2.7
+
 
 ## Details of Implementation
 
