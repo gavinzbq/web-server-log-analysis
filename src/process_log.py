@@ -38,7 +38,8 @@ def gen_info(filename):
 """
     FEATURE 1:
 
-    input the log file, return a dictionary 'num_access_dict'
+    Function 'active_host' return a dictionary 'num_access_dict' from the log
+    file.
     num_access_dict = {IP: # requests, ...}
 """
 def active_host(filename):
@@ -52,6 +53,7 @@ def active_host(filename):
     return num_access_dict
 
 """
+    Function 'feature1_write' write feature 1 results to hosts.txt
     1. generate dictionary 'num_access_dict' from log file
     2. generate max binary heap(priority queue) 'activeIP_bh' from the above
        dictionary 
@@ -76,38 +78,21 @@ def feature1_write(filename):
     FEATURE 2:
 
     Function 'resource_band': generate dictionary 'resrc_byte'
-
-    dictionary resrc_time = {resource: [time1, time2, ...], ...}
     dictionary resrc_byte = {resource: sum(bytes), ...}
-    dt_str: datatime string, DD/MON/YYYY:HH:MM:SS
 
     Function 'feature2_write' is similar to 'feature1_write'
 """
 def resource_band(filename):
-    resrc_time = {}
     resrc_byte = {}
-    resrc_bwth = {}
-    parse_time = '%d/%b/%Y:%H:%M:%S'
     
     for info in gen_info(filename):
-        dt_str = info[1]
         resrc = info[4]
         byte = info[7]
-        if not resrc in resrc_time:
-            resrc_time[resrc] = [dt_str]
+        if not resrc in resrc_byte:
             resrc_byte[resrc] = int(byte)
         else:
-            resrc_time[resrc].append(dt_str)
             resrc_byte[resrc] += int(byte)
 
-#    for resource in resrc_time:
-#        if len(resrc_time[resource]) >= 2:
-#            starttime = datetime.strptime(resrc_time[resource][0], parse_time)
-#            endtime = datetime.strptime(resrc_time[resource][-1], parse_time)
-#            time_intv = int((endtime - starttime).total_seconds())
-#            if time_intv != 0:
-#                resrc_bwth[resource] = int(resrc_byte[resource]) / time_intv
-#    return resrc_bwth
     return resrc_byte
 
 def feature2_write(filename):
@@ -157,6 +142,16 @@ def hr_visit(filename):
                 hr_vst_dict[timestamp] = current_count
                 current_count = current_count - 1
 
+    """
+        In the last one hour (or less), 60min window start time is every second
+        until the very last one. Meaning it is not necessarily when an event
+        happened.
+
+        int variable 'counter' means 10 is enough for the purpose, i.e. start
+        from the first event at the front of the queue, end at the 10th second.
+
+        funny right?
+    """
     counter = 0
     stamp = time_queue.front()
     while (time_queue.size() > 0) and (counter < 10):
@@ -192,12 +187,24 @@ def feature3_write(filename):
     hours_bh.build_heap(hrvisit_dict)
     
     """
-        Implement a feature that, in the case of  #visits associated with different
-        timestamps are the same, the timestamps are sorted in ascending order.
+        Function 'feature3_write' differs from the first two in that it
+        implements a feature -- in the case of #visits associated with
+        different timestamps are same, the printed timestamps are sorted in
+        ascending order. For the mere purpose of meeting the test result
+        provided by /insight_testsuite
 
-        W T F
+        time_num = [(time, #visits)], a list of tuple records the top 10 busy
+        window;
+
+        num_time_dict = {#visits: [time1, time2]}, a dictionary maps the same
+        #visits to a list of timestamps. The timestamp list will be sorted
+        later;
+
+        num_list = [#visits], is a list of different #visits and becomes sorted
+        in descending order later;
+
+        again, funny right? 
     """
-    # list of tuples: [(time, #visits)]
     time_num = [] 
     counter = 1
     while (counter <= 10) and (hours_bh.size() > 0):
@@ -205,7 +212,6 @@ def feature3_write(filename):
         time_num.append(tuple)
         counter += 1
 
-    # dict: {#visits: [time1, time2]}
     num_time_dict = {}
     for tup in time_num:
         if not tup[1] in num_time_dict:
@@ -213,7 +219,6 @@ def feature3_write(filename):
         else:
             num_time_dict[tup[1]].append(tup[0])
 
-    # list of #visits
     num_list = []
     parse_time = '%d/%b/%Y:%H:%M:%S'
     for num in num_time_dict:
@@ -223,7 +228,6 @@ def feature3_write(filename):
                 sorted(num_time_dict[num], key=lambda x:
                 datetime.strptime(x, parse_time))
                 )
-    # sort the list in descending order
     num_list.sort(key=int, reverse=True)
 
     with open(os.path.join(os.getcwd(), 'log_output/hours.txt'), 'w') as ofile:
@@ -232,9 +236,6 @@ def feature3_write(filename):
                 string = time + ' -0400' + ','  + str(num)
                 ofile.write('%s\n' % string)    
 
-    with open(os.path.join(os.getcwd(), 'log_output/busyhr.txt'), 'w') as (
-            ofile):
-        ofile.write('00:00:00')
 
 """
     FEATURE 4:
