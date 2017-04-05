@@ -1,4 +1,5 @@
 #!/usr/bin/python -tt
+# Shanyun Gao, 04/2017
 
 import sys
 import re
@@ -235,6 +236,48 @@ def feature3_write(filename):
             for time in num_time_dict[num]:
                 string = time + ' -0400' + ','  + str(num)
                 ofile.write('%s\n' % string)    
+                
+                
+"""
+    FEATURE 3 alternative:
+
+    Function 'hour_visit' returns a dictionary 'hour_visit'
+    hour_visit = {timestamp (first event since an hour start): # visits, ...}
+
+    dictionary hr_visit_dict = {hour: [timestamp, # visits]}
+    hour format: 'DD/MON/YYYY:HH'; timestamp format: 'DD/MON/YYYY:HH:MM:SS'
+    
+    Function 'feature3_write' is similar to 'feature1_write' and
+    'feature2_write'
+"""
+def hour_visit(filename):
+    hr_visit_dict = {}
+    hour_visit = {}
+
+    for info in gen_info(filename):
+        time_str = info[1]
+        current_hour = time_str[:14]
+        if not current_hour in hr_visit_dict:
+            hr_visit_dict[current_hour] = [time_str, 1]
+        else:
+            hr_visit_dict[current_hour][1] += 1
+
+    for values in hr_visit_dict.viewvalues():
+        hour_visit[values[0]] = values[1]
+
+    return hour_visit
+
+def feature3_alternative(filename):
+    hrvisit_dict = hour_visit(filename)
+    hours_bh = max_BinHeap()
+    hours_bh.build_heap(hrvisit_dict)
+    with open(os.path.join(os.getcwd(), 'log_output/busyhr.txt'), 'w') as ofile:
+        counter = 1
+        while (counter <= 10) and (hours_bh.size() > 0):
+            tuple = hours_bh.del_max()
+            string = tuple[0][:18]+'00 -0400'+','+str(tuple[1])
+            ofile.write('%s\n' % string)
+            counter += 1
 
 
 """
@@ -346,6 +389,7 @@ def main():
         feature2_write(filename)
         feature3_write(filename)
         feature4_write(filename)
+        feature3_alternative(filename)
     else:
         print 'unknown option: ' + option
         sys.exit(1)
