@@ -1,5 +1,8 @@
 # Shanyun Gao    
-# Binary Heap data structure: maxheap 
+"""
+    priority queue data structure.
+    max binary heap, dequeue the maximum.
+"""
 
 class max_BinHeap:
     def __init__(self):
@@ -7,8 +10,8 @@ class max_BinHeap:
         self.keylist = [None]
         self.currentsize = 0
 
-    # build a binary heap with an input dict, based on dict values, with
-    # maximum length constraint
+    # build a binary heap with an input dict {key: value}
+    # will dequeue key-value pair (key, value) with the max value
     def build_heap(self, adict):
         i = len(adict) // 2
         self.currentsize = len(adict)

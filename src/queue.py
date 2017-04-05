@@ -1,5 +1,5 @@
 # Shanyun Gao 
- #queue.py
+# Queue data structure 
 
 class Queue:
     def __init__(self):
@@ -14,12 +14,14 @@ class Queue:
     def dequeue(self):
         return self.items.pop()
 
+    # view front of the queue
     def front(self):
         if len(self.items) != 0:
             return self.items[-1]
         else:
             return None
 
+    # view end of the queue
     def end(self):
         if len(self.items) != 0:
             return self.items[0]
