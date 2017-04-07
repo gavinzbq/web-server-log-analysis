@@ -140,7 +140,8 @@ def hr_visit(filename):
                 current_count += 1
             else:
                 timestamp = time_queue.dequeue()
-                hr_vst_dict[timestamp] = current_count
+                if not timestamp in hr_vst_dict:
+                    hr_vst_dict[timestamp] = current_count
                 current_count = current_count - 1
 
     """
