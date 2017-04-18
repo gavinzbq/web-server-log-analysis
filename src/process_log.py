@@ -139,10 +139,17 @@ def hr_visit(filename):
                 time_queue.enqueue(time)
                 current_count += 1
             else:
-                timestamp = time_queue.dequeue()
-                if not timestamp in hr_vst_dict:
-                    hr_vst_dict[timestamp] = current_count
-                current_count = current_count - 1
+                while interval >= 3600:
+                    timestamp = time_queue.dequeue()
+                    if not timestamp in hr_vst_dict:
+                        hr_vst_dict[timestamp] = current_count
+                    current_count = current_count - 1
+                    timest = time_queue.front()
+                    timest_real = datetime.strptime(timest,parse_time)
+                    interval = int((time2_real - timest_real).total_seconds())
+
+                time_queue.enqueue(time)
+                current_count += 1
 
     """
         In the last one hour (or less), 60min window start time is every second
@@ -151,8 +158,6 @@ def hr_visit(filename):
 
         int variable 'counter' means 10 is enough for the purpose, i.e. start
         from the first event at the front of the queue, end at the 10th second.
-
-        funny right?
     """
     counter = 0
     stamp = time_queue.front()
@@ -204,8 +209,6 @@ def feature3_write(filename):
 
         num_list = [#visits], is a list of different #visits and becomes sorted
         in descending order later;
-
-        again, funny right? 
     """
     time_num = [] 
     counter = 1
@@ -252,19 +255,21 @@ def feature3_write(filename):
     'feature2_write'
 """
 def hour_visit(filename):
-    hr_visit_dict = {}
+    #hr_visit_dict = {}
     hour_visit = {}
 
     for info in gen_info(filename):
         time_str = info[1]
         current_hour = time_str[:14]
-        if not current_hour in hr_visit_dict:
-            hr_visit_dict[current_hour] = [time_str, 1]
+        if not current_hour in hour_visit:
+            #hr_visit_dict[current_hour] = [time_str, 1]
+            hour_visit[current_hour] = int(1)
         else:
-            hr_visit_dict[current_hour][1] += 1
+            #hr_visit_dict[current_hour][1] += 1
+            hour_visit[current_hour] += 1
 
-    for values in hr_visit_dict.viewvalues():
-        hour_visit[values[0]] = values[1]
+    #for values in hr_visit_dict.viewvalues():
+    #    hour_visit[values[0]] = values[1]
 
     return hour_visit
 
