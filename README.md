@@ -176,18 +176,19 @@ The top 10 resources with the most bandwidth consumption as following.
 
 ### Feature 3
 
-The top 10 resources with the most bandwidth consumption as following.
+The top 10 busiest (most frequently visited) 60-minute periods.
 
-    13/Jul/1995:08:19:39 -0400,23246
-    13/Jul/1995:08:19:41 -0400,23245
-    13/Jul/1995:08:19:40 -0400,23243
-    13/Jul/1995:08:19:43 -0400,23237
-    13/Jul/1995:08:19:47 -0400,23224
-    13/Jul/1995:08:19:48 -0400,23216
-    13/Jul/1995:08:19:49 -0400,23208
-    13/Jul/1995:08:19:50 -0400,23200
-    13/Jul/1995:08:19:51 -0400,23194
-    13/Jul/1995:08:19:55 -0400,23193
+    13/Jul/1995:08:59:33 -0400,34881
+    13/Jul/1995:08:59:39 -0400,34872
+    13/Jul/1995:08:59:40 -0400,34872
+    13/Jul/1995:08:59:35 -0400,34869
+    13/Jul/1995:08:59:34 -0400,34868
+    13/Jul/1995:08:59:41 -0400,34866
+    13/Jul/1995:08:59:42 -0400,34864
+    13/Jul/1995:08:59:36 -0400,34862
+    13/Jul/1995:08:59:37 -0400,34860
+    13/Jul/1995:08:59:38 -0400,34860
+
 
         
 It is observed that the top 10 busiest 1-hour window gather within a 15-minute time period. 10 lines of results conclude basically one busiest 1-hour window. It is the primary motivation to add the new feature.
