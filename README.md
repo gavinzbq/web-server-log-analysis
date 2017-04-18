@@ -191,7 +191,7 @@ The top 10 busiest (most frequently visited) 60-minute periods.
 
 
         
-It is observed that the top 10 busiest 1-hour window gather within a 15-minute time period. 10 lines of results conclude basically one busiest 1-hour window. It is the primary motivation to add the new feature.
+It is observed that the top 10 busiest 1-hour window gather within a 1-minute time period. 10 lines of results conclude basically one busiest 1-hour window. It is the primary motivation to add the new feature.
 
 ### Feature 4
 
